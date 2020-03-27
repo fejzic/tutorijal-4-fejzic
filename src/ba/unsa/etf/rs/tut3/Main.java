@@ -1,4 +1,4 @@
-package ba.unsa.etf.rs.tut4;
+package ba.unsa.etf.rs.tut3;
 
 public class Main {
     public static void main(String[] args) {

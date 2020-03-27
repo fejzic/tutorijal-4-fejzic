@@ -1,4 +1,4 @@
-package ba.unsa.etf.rs.tut4;
+package ba.unsa.etf.rs.tut3;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArtikalTest {
 
-    @Test
-    void getSifra() {
+    @DynamicTest
+    public void getSifra() {
         Artikal a = new Artikal("ABC", "Proizvod", 100);
         assertEquals("ABC", a.getSifra());
     }
@@ -122,7 +122,7 @@ class ArtikalTest {
     }
 
     @Test
-    void izbaciDuplikate() {
+    void izbaciDuplikate()  {
         ArrayList<Artikal> lista = new ArrayList<>();
         lista.add(new Artikal("ABC", "Proizvod", 100));
         lista.add(new Artikal("DEF", "Usluga", 200));
