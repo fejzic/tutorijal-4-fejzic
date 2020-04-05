@@ -1,12 +1,15 @@
 package ba.unsa.etf.rs.tut3;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Artikal {
         private String sifra;
         private String naziv;
         private double cijena;
 
+    public Artikal(String abc, String proizvod, double v) {
+    }
 
 
     public String getSifra() {
@@ -38,10 +41,33 @@ public class Artikal {
 
 
 
-    public Artikal(String sifra, String naziv, double cijena) {
-        setSifra(sifra);
-        setNaziv(naziv);
-        setCijena(cijena);
+    public Artikal (String inParameters) {
+        //String[] artikal =  inParameters.split(",");
+        //this.sifra=artikal[0];
+        int i = 0;
+        for (String parameter: inParameters.split(",")) {
+            if (i == 0) {
+                if (parameter.isEmpty()) {
+                    throw new IllegalArgumentException("Šifra je prazna");
+                }
+                this.sifra = parameter;
+                i++;
+            }
+            else if (i == 1) {
+                if (parameter.isEmpty()) {
+                    throw new IllegalArgumentException("Naziv je prazan");
+                }
+                this.naziv = parameter;
+                i++;
+            }
+            else {
+                if (Double.parseDouble(parameter.trim()) <= 0 ) {
+                    throw new IllegalArgumentException("Cijena je manja od 0!");
+                }
+                i = 0;
+                this.cijena = Double.parseDouble(parameter.trim());
+            }
+        }
     }
 
     public Artikal() {
@@ -49,8 +75,16 @@ public class Artikal {
 
     @Override
     public String toString() {
-        return sifra + "," + naziv + "," + cijena;
+        String parametri = null;
+        parametri += this.sifra;
+        parametri += ",";
+        parametri += this.naziv;
+        parametri += ",";
+        parametri += cijena;
+        return parametri;
     }
+
+
 
     Object o = new Object();
     public static ArrayList<Artikal> izbaciDuplikate(ArrayList<Artikal> artikal){
@@ -73,6 +107,22 @@ public class Artikal {
                 sifra.equals(artikal.sifra) &&
                 naziv.equals(artikal.naziv);
     }
+    public static void izbaciDuplikateHashSet (ArrayList lista) {
+
+        HashSet set = new HashSet();
+        set.addAll(lista);
+        lista = new ArrayList();
+        lista.addAll(set);
+
+        for (int i = 0; i < lista.size(); i++) {
+            set.add(lista.get(i));
+        }
+        lista.clear();
+        for (Object s: set) {
+            lista.add(s);
+        }
+    }
+
 
 
 
