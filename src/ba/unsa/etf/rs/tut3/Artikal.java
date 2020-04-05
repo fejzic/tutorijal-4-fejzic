@@ -4,30 +4,46 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Artikal {
-        private String sifra;
-        private String naziv;
-        private double cijena;
+    public String sifra;
+    public String naziv;
+    public double cijena;
 
-    public Artikal(String abc, String proizvod, double v) {
+    public Artikal(String sifra, String naziv, double cijena){
+        try {
+            setCijena(cijena);
+            setNaziv(naziv);
+            setSifra(sifra);
+        } catch(Exception e){
+            throw new IllegalArgumentException(e);
+        }
+    }
+    public Artikal(String string) {
+        if(string.isEmpty()) throw  new IllegalArgumentException("String je prazan!");
+        String[] niz=string.split(",");
+        if(niz.length<3) throw new IllegalArgumentException("Pogresan unos!");
+        setSifra(niz[0]);
+        setNaziv(niz[1]);
+        setCijena(Double.parseDouble(niz[2]));
     }
 
+    public Artikal() {}
 
     public String getSifra() {
         return sifra;
     }
 
     public void setSifra(String sifra) {
-        if (sifra.isEmpty())throw new IllegalArgumentException("Sifra je prazan");
-        this.sifra = sifra;
+        if(sifra.isEmpty()) throw new IllegalArgumentException("Šifra je prazna!");
+        this.sifra=sifra;
     }
 
     public String getNaziv() {
-        return naziv;
+        return  naziv;
     }
 
     public void setNaziv(String naziv) {
-        if(naziv.isEmpty())throw new IllegalArgumentException("Naziv je prazan");
-        this.naziv = naziv;
+        if(naziv.isEmpty()) throw new IllegalArgumentException("Naziv je prazan!");
+        this.naziv=naziv;
     }
 
     public double getCijena() {
@@ -35,81 +51,32 @@ public class Artikal {
     }
 
     public void setCijena(double cijena) {
-        if(cijena < 0) throw new IllegalArgumentException("Cijena je negativna");
-        this.cijena = cijena;
+        if(cijena < 0) throw new IllegalArgumentException("Cijena je negativna!");
+        if(cijena == 0) throw new IllegalArgumentException("Cijena je jednaka nuli!"); // ljepše je ovako jer je specificiran izuzetak
+        this.cijena=cijena;
     }
-
-
-
-    public Artikal (String inParameters) {
-        //String[] artikal =  inParameters.split(",");
-        //this.sifra=artikal[0];
-        int i = 0;
-        for (String parameter: inParameters.split(",")) {
-            if (i == 0) {
-                if (parameter.isEmpty()) {
-                    throw new IllegalArgumentException("Šifra je prazna");
-                }
-                this.sifra = parameter;
-                i++;
-            }
-            else if (i == 1) {
-                if (parameter.isEmpty()) {
-                    throw new IllegalArgumentException("Naziv je prazan");
-                }
-                this.naziv = parameter;
-                i++;
-            }
-            else {
-                if (Double.parseDouble(parameter.trim()) <= 0 ) {
-                    throw new IllegalArgumentException("Cijena je negativna");
-                }
-                i = 0;
-                this.cijena = Double.parseDouble(parameter.trim());
-            }
-        }
-    }
-
-    public Artikal() {
-    }
-
     @Override
-    public String toString() {
-        String parametri = null;
-        parametri += this.sifra;
-        parametri += ",";
-        parametri += this.naziv;
-        parametri += ",";
-        parametri += cijena;
-        return parametri;
-    }
-
-
-
-    Object o = new Object();
-    public static ArrayList<Artikal> izbaciDuplikate(ArrayList<Artikal> artikal){
-        for(int i = 0; i < artikal.size();i++)
-            for(int j = i+1; j < artikal.size();j++)
-                if (artikal.get(i).equals(artikal.get(j))){
-                    artikal.remove(j);
-                    j--;
-                }
-
-        return artikal;
+    public String toString(){
+        return sifra + "," + naziv + "," + cijena;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Artikal artikal = (Artikal) o;
-        return Double.compare(artikal.cijena, cijena) == 0 &&
-                sifra.equals(artikal.sifra) &&
-                naziv.equals(artikal.naziv);
+        Artikal a= (Artikal)o;
+        if( (this.cijena>0 && a.cijena<0) || (this.cijena<0 && a.cijena>0) ) return false;
+        return this.sifra.equals(a.sifra) && this.naziv.equals(a.naziv) && Math.abs(this.cijena-a.cijena) <= 1e-20*(Math.abs(this.cijena) + Math.abs(a.cijena));
     }
 
-
-
-
+    public static ArrayList<Artikal> izbaciDuplikate(ArrayList<Artikal> lista) {
+        for(int i=0; i<lista.size(); i++){
+            for(int j=i+1; j<lista.size(); j++){
+                if(lista.get(i).equals(lista.get(j))){
+                    lista.remove(j);
+                    j--;
+                }
+            }
+        }
+        return lista;
+    }
 }
 
