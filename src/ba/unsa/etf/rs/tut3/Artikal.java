@@ -62,7 +62,7 @@ public class Artikal {
             }
             else {
                 if (Double.parseDouble(parameter.trim()) <= 0 ) {
-                    throw new IllegalArgumentException("Cijena je manja od 0!");
+                    throw new IllegalArgumentException("Cijena je negativna");
                 }
                 i = 0;
                 this.cijena = Double.parseDouble(parameter.trim());
@@ -106,21 +106,6 @@ public class Artikal {
         return Double.compare(artikal.cijena, cijena) == 0 &&
                 sifra.equals(artikal.sifra) &&
                 naziv.equals(artikal.naziv);
-    }
-    public static void izbaciDuplikateHashSet (ArrayList lista) {
-
-        HashSet set = new HashSet();
-        set.addAll(lista);
-        lista = new ArrayList();
-        lista.addAll(set);
-
-        for (int i = 0; i < lista.size(); i++) {
-            set.add(lista.get(i));
-        }
-        lista.clear();
-        for (Object s: set) {
-            lista.add(s);
-        }
     }
 
 

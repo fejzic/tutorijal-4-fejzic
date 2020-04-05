@@ -12,7 +12,7 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Controller {
+public class test {
     public javafx.scene.control.TextArea inputArea;
     public javafx.scene.control.TextArea outputArea;
     @FXML
@@ -36,18 +36,7 @@ public class Controller {
         this.quantity.setValueFactory(quantityValueFactory);
 
 
-        //SpinnerValueFactory quantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100,0);
-        /*SpinnerValueFactory<Integer> quantity = new SpinnerValueFactory<Integer>() {
-            @Override
-            public void decrement(int i) {
-                quantity.decrement(1);
-            }
 
-            @Override
-            public void increment(int i) {
-                quantity.increment(1);
-            }
-        };*/
     }
 
     public void dodajArtikle(ActionEvent actionEvent) {

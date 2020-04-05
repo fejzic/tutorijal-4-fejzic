@@ -55,6 +55,7 @@ public class Racun {
         artikal.setNaziv(artikal.getNaziv());
         artikal.setCijena(artikal.getCijena());
         if(kolicina < 0) throw new IllegalArgumentException("Količina ne može biti negativna!");
+        if(kolicina==0)throw new IllegalArgumentException("Količina ne može biti 0!");
 
         for(int i=0;i<kolicina;i++) this.racun.add(artikal);
     }
